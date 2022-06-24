@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client"
-import { Header } from "./components/Header";
+import { Event } from "./pages/Event";
 
 const GET_LESSONS_QUERY = gql`
   query{
@@ -19,7 +19,7 @@ function App() {
   const { data } = useQuery(GET_LESSONS_QUERY);
 
   return (
-    <Header />
+    <Event />
   )
 }
 
