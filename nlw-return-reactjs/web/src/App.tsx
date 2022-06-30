@@ -1,10 +1,7 @@
-import { useState } from 'react'
+import { Widget } from "./components/Widget";
 
-function App() {
-
+export function App(){
   return (
-    <h1>teste</h1>
+    <Widget/>
   )
 }
-
-export default App
