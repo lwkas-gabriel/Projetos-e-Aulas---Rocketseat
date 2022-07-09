@@ -8,7 +8,7 @@ export function TodoList(){
                 </div>
                 <div className="flex items-center gap-2">
                     <span className="text-sm font-bold text-[#8284FA]">Concluidas</span>
-                    <span className="text-xs font-bold text-gray-200"><div className="bg-gray-400 rounded-full px-[15px]">0 de 0</div></span>
+                    <span className="text-xs font-bold text-gray-200"><div className="bg-gray-400 rounded-full px-[10px]">0 de 0</div></span>
                 </div>
             </div>
 
