@@ -3,7 +3,7 @@ import { TodoList } from "./TodoList";
 
 export function Todo(){
     return (
-        <div className="bg-gray-400 min-h-screen">
+        <div className="bg-gray-600 min-h-screen">
             <TodoAddNew/>
             <TodoList/>
         </div>
