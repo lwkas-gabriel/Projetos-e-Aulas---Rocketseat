@@ -1,3 +1,5 @@
+import { TodoItem } from "./TodoItem";
+
 export function TodoList(){
     return (
         <div className="mr-auto ml-auto mt-16 w-[736px]">
@@ -13,7 +15,7 @@ export function TodoList(){
             </div>
 
             <div>
-                <input type="checkbox" name="teste"/>
+                <TodoItem/>
             </div>
         </div>
     )
