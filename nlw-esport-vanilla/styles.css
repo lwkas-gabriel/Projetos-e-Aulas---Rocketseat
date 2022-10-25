@@ -34,9 +34,14 @@ header div{
 
     display: flex;
     padding: 4px;
+    transition: transform 0.3s;
 }
 
-header img{
+header div:hover{
+    transform: scale(1.1);
+}
+
+header div img{
     width: 100%;
     border-radius: 50%;
 }
@@ -77,13 +82,18 @@ section p{
 }
 
 section ul{
-    margin-top: 24px;
+    display: flex;
     flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 24px;
 }
 
-ul{
-    display: flex;
-    gap: 16px;
+section ul li{
+    transition: transform 0.3s;
+}
+
+section ul li:hover{
+    transform: scale(1.1);
 }
 
 .games-list img{
