@@ -2,7 +2,17 @@ import express from 'express'
 
 const app = express();
 
-app.get('/ads', (request, response)=>{
+app.get('/games', (request, response)=>{
+    return response.json([]);
+})
+
+app.post('/ads', (request, response)=>{
+    return response.status(201).json([]);
+})
+
+app.get('/games/:id/ads', (request, response)=>{
+    //const gameId = request.params.id;
+
     return response.json(
         [
             {id:1, nome:"teste 1"},
@@ -10,6 +20,14 @@ app.get('/ads', (request, response)=>{
             {id:3, nome:"teste 3"},
             {id:4, nome:"ablublu"},
         ]
+    )
+});
+
+app.get('/ads/:id/discord', (request, response)=>{
+    //const ad = request.params.id;
+
+    return response.json(
+        []
     )
 });
 
