@@ -10,9 +10,7 @@ app.register(cors);
 app.get("/", async () => {
     //se eu tiro o where, ele retorna todas as entradas do banco de dados
     const habits = await prisma.habit.findMany({
-        where: {
 
-        }
     })
     return habits
 })
