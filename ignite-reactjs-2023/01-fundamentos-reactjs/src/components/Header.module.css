@@ -9,3 +9,11 @@
 .header img{
     height: 2rem;
 }
+
+.header p{
+    color: var(--gray-100);
+    align-self: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 700;
+    padding-left: 1rem;
+}
