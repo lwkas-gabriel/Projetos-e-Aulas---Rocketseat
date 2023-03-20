@@ -6,14 +6,29 @@ import zod from 'zod'
 
 import { HomeContainer, FormContainer, CountdownContainer, Separator, StartCountdownButton, MinutesAmountInput, TaskInput } from './styles';
 
+//a bibliotec zod tem uma boa integração com typescript
+
 const newCycleFormValidationSchema = zod.object({
     task: zod.string().min(1, 'Informe a tarefa'),
-    MinutesAmount: zod.number().min(5).max(60),
+    minutesAmount: zod.number().min(5).max(60),
 })
 
+// interface NewCycleFormData{
+//     task: string
+//     minutesAmount: number
+// }
+
+
+//os dois métodos de integração funcionam e estão certos
+type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
+
 export function Home(){
-    const { register, handleSubmit, watch, formState } = useForm({
+    const { register, handleSubmit, watch, formState } = useForm<NewCycleFormData>({
         resolver: zodResolver(newCycleFormValidationSchema),
+        defaultValues: {
+            task: '',
+            minutesAmount: 0,
+        }
     });
 
     function handleCreateNewCicle(data:any){
@@ -31,7 +46,7 @@ export function Home(){
                     <TaskInput id="task"
                      list="task-suggestions"
                      placeholder='Dê um nome para o seu projeto'
-                     {...register('task'), {valueAsNumber: true}}
+                     {...register('task', {valueAsNumber: true})}
                     />
 
                     <datalist id="task-suggestions">
