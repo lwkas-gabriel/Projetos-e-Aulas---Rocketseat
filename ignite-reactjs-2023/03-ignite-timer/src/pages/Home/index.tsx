@@ -6,7 +6,7 @@ import zod from 'zod'
 
 import { HomeContainer, FormContainer, CountdownContainer, Separator, StartCountdownButton, MinutesAmountInput, TaskInput } from './styles';
 
-//a bibliotec zod tem uma boa integração com typescript
+//a biblioteca zod tem uma boa integração com typescript
 
 const newCycleFormValidationSchema = zod.object({
     task: zod.string().min(1, 'Informe a tarefa'),
@@ -22,8 +22,17 @@ const newCycleFormValidationSchema = zod.object({
 //os dois métodos de integração funcionam e estão certos
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 
+interface Cycle{
+    id: string;
+    task: string;
+    minutesAmout: number;
+}
+
 export function Home(){
-    const { register, handleSubmit, watch, formState, reset } = useForm<NewCycleFormData>({
+    const [cycles, setCycles] = useState<Cycle[]>([]);
+    const [activeCycleId, setActiveCycleId] = useState<string | null>(null);
+
+    const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
         resolver: zodResolver(newCycleFormValidationSchema),
         defaultValues: {
             task: '',
@@ -31,22 +40,35 @@ export function Home(){
         }
     });
 
-    function handleCreateNewCycle(data:any){
+    function handleCreateNewCycle(data: NewCycleFormData){
+        const newCycle: Cycle = {
+            id: String(new Date().getTime()),
+            task: data.task,
+            minutesAmout: data.minutesAmount,
+        };
+
+        setCycles(state => [...cycles, newCycle]);
+        setActiveCycleId(newCycle.id)
         reset();
     }
 
+    const activeCycle = cycles.find(cycle => cycle.id === activeCycleId);
+
+    console.log(activeCycle)
+
     const task = watch('task');
-    //const isSubmitDisabled = !task;
+    const isSubmitDisabled = !task;
 
     return (
         <HomeContainer>
             <form onSubmit={handleSubmit(handleCreateNewCycle)} action="">
                 <FormContainer>
                     <label htmlFor="task">Vou trabalhar em</label>
-                    <TaskInput id="task"
+                    <TaskInput
+                     id="task"
                      list="task-suggestions"
                      placeholder='Dê um nome para o seu projeto'
-                     {...register('task', {valueAsNumber: true})}
+                     {...register('task')}
                     />
 
                     <datalist id="task-suggestions">
@@ -63,6 +85,7 @@ export function Home(){
                         step={5}
                         min={5}
                         max={60}
+                        {...register('minutesAmount', {valueAsNumber: true})}
                     />
 
                     <span>minutos.</span>
@@ -77,7 +100,7 @@ export function Home(){
                     <span>0</span>
                 </CountdownContainer>
 
-                <StartCountdownButton disabled={task===''} type="submit">
+                <StartCountdownButton disabled={isSubmitDisabled} type="submit">
                     <Play size={24}/>
                     Começar
                 </StartCountdownButton>
