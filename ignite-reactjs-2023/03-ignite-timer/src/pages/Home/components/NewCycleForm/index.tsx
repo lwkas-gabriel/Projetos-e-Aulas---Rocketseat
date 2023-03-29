@@ -1,33 +1,13 @@
 import { FormContainer, MinutesAmountInput, TaskInput } from "./styles";
 import * as zod from 'zod'
-import { useForm } from 'react-hook-form'
+import { useForm, useFormContext } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod";
-
-//a biblioteca zod tem uma boa integração com typescript
-
-const newCycleFormValidationSchema = zod.object({
-    task: zod.string().min(1, 'Informe a tarefa'),
-    minutesAmount: zod.number().min(5).max(60),
-})
-
-// interface NewCycleFormData{
-//     task: string
-//     minutesAmount: number
-// }
-
-
-//os dois métodos de integração funcionam e estão certos
-type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
+import { useContext } from "react";
+import { CyclesContext } from "../..";
 
 export function NewCycleForm(){
-    const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
-        resolver: zodResolver(newCycleFormValidationSchema),
-        defaultValues: {
-            task: '',
-            minutesAmount: 0,
-        }
-    });
-
+    const { activeCycle } = useContext(CyclesContext);
+    const { register } = useFormContext();
 
     return (
         <FormContainer>
