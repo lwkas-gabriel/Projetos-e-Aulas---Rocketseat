@@ -61,6 +61,20 @@ export function CyclesContextProvider({ children }: CyclesContextProviderProps){
             }
         }
 
+        if(action.type === 'MARK_CURRENT_CYCLE_AS_FINISHED'){
+            return {
+                ...state,
+                cycles: state.cycles.map((cycle) => {
+                    if(cycle.id == state.activeCycleId){
+                        return {...cycle, finishedDate: new Date()}
+                    }else{
+                        return cycle
+                    }
+                }),
+                activeCycleId: null,
+            }
+        }
+
         return state;
     }, {
         cycles: [],
@@ -78,15 +92,6 @@ export function CyclesContextProvider({ children }: CyclesContextProviderProps){
     }
 
     function markCurrentCycleAsFinished(){
-        // setCycles( state => 
-        //     state.map((cycle) => {
-        //       if(cycle.id === activeCycleId){
-        //           return {...cycle, finishedDate: new Date() }
-        //       } else{
-        //           return cycle;
-        //       }
-        //   }),
-        //   )
         dispatch({
             type: 'MARK_CURRENT_CYCLE_AS_FINISHED',
             payload: {
@@ -116,7 +121,6 @@ export function CyclesContextProvider({ children }: CyclesContextProviderProps){
     }
     
     function interruptCurrentCycle(){
-        //setActiveCycleId(null);
         dispatch({
             type: 'INTERRUPT_CURRENT_CYCLE',
             payload:{
