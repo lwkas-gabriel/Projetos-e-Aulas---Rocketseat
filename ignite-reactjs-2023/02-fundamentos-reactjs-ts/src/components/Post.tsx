@@ -1,12 +1,29 @@
 import { format, formatDistanceToNow } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR"
 
-import { useState } from "react";
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from "react";
 import { Comment } from "./Comment";
 import { Avatar } from "./Avatar"
 import styles from "./Post.module.css";
 
-export function Post({author, content, publishedAt}){
+interface Author{
+    name: string;
+    role: string;
+    avatarUrl: string;
+}
+
+interface Content{
+    type: "paragraph" | "link";
+    content: string;
+}
+
+interface PostProps{
+    author: Author;
+    publishedAt: Date;
+    content: Content[];
+}
+
+export function Post({author, content, publishedAt}: PostProps){
     const [comments, setComments] = useState([
         "Post muito foda!",
     ]);
@@ -20,22 +37,22 @@ export function Post({author, content, publishedAt}){
         addSuffix: true
     });
 
-    function handleNewCommentChange(){
+    function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>){
         event.target.setCustomValidity("");
         setNewCommentText(event.target.value);
     }
 
-    function handleNewCommentInvalid(){
+    function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>){
         event.target.setCustomValidity("Esse campo é obrigatório");
     }
 
-    function handleCreateNewComment(){
+    function handleCreateNewComment(event: FormEvent){
         event.preventDefault();
         setComments([...comments, newCommentText]);
         setNewCommentText("");
     }
 
-    function deleteComment(commentToDelete){
+    function deleteComment(commentToDelete: string){
         const commentsWithoutDeletedOne = comments.filter(comment => {
             return comment !== commentToDelete;
         });
@@ -64,7 +81,7 @@ export function Post({author, content, publishedAt}){
                 {content.map(line => {
                     if (line.type === "paragraph"){
                         return <p key={line.content}>{line.content}</p>
-                    } else if (line.typpe === "link"){
+                    } else if (line.type === "link"){
                         return <p key={line.content}><a href="#">{line.content}</a></p>
                     }
                 })}
