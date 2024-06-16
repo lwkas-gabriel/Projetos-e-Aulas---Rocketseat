@@ -4,8 +4,8 @@
     padding: 2.5rem;
 }
 
-.post + .post {
-    margin-top: 2rem;
+.post + .post{
+    padding-top: 2rem;
 }
 
 .content{
@@ -18,7 +18,7 @@
     margin-top: 1rem;
 }
 
-.content a{
+.content a {
     font-weight: bold;
     color: var(--green-500);
     text-decoration: none;
@@ -45,17 +45,14 @@
     gap: 1rem;
 }
 
-.authorInfo{
-    display: flex;
-    flex-direction: column;
-}
-
 .authorInfo strong{
+    display: block;
     color: var(--gray-100);
     line-height: 1.6;
 }
 
 .authorInfo span{
+    display: block;
     font-size: 0.875rem;
     color: var(--gray-400);
     line-height: 1.6;
@@ -68,7 +65,7 @@
     border-top: 1px solid var(--gray-600);
 }
 
-.commentForm > strong{
+.commentForm > strong {
     line-height: 1.6;
     color: var(--gray-100);
 }
@@ -82,8 +79,8 @@
     padding: 1rem;
     border-radius: 8px;
     color: var(--gray-100);
-    line-height: 1.6;
-    margin-top: 1rem ;
+    line-height: 1.4;
+    margin-top: 1rem;
 }
 
 .commentForm footer{
@@ -96,11 +93,11 @@
     max-height: none;
 }
 
-.commentForm button{
+.commentForm button[type=submit]{
     padding: 1rem 1.5rem;
     margin-top: 1rem;
-    border: 0;
     border-radius: 8px;
+    border: 0;
     background: var(--green-500);
     color: var(--white);
     font-weight: bold;
@@ -120,3 +117,5 @@
 .commentList{
     margin-top: 2rem;
 }
+
+

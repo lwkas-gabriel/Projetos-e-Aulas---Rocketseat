@@ -26,20 +26,18 @@
     justify-content: space-between;
 }
 
-.authorAndTime{
-    display: flex;
-    flex-direction: column;
-}
-
 .authorAndTime strong{
+    display: block;
     font-size: 0.875rem;
     line-height: 1.6;
 }
 
+
 .authorAndTime time{
+    display: block;
     font-size: 0.75rem;
     line-height: 1.6;
-    color: var(--gray-400)
+    color: var(--gray-400);
 }
 
 .commentContent header button{
@@ -49,7 +47,6 @@
     cursor: pointer;
     line-height: 0;
     border-radius: 2px;
-    
 }
 
 .commentContent header button:hover{
@@ -73,14 +70,16 @@
 
     display: flex;
     align-items: center;
+
+    border-radius: 2px;
 }
 
 .commentBox footer button:hover{
     color: var(--green-300);
 }
 
-.commentBox footer svg{
-    margin-right: 0.625rem;
+.commentBox footer button svg{
+    margin-right: 0.5rem;
 }
 
 .commentBox footer button span::before{
