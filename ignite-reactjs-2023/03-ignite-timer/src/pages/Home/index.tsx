@@ -18,6 +18,7 @@ const newCycleFormValidationSchema = zod.object({
         .max(60, "O ciclo precisa ser de no máximo 60 minutos"),
 });
 
+//o uso da interface está certo, mas o diego mosstrou como fazer com o zod.
 // interface NewCycleFormDate{
 //     task: string;
 //     minutesAmount: number;
@@ -27,7 +28,7 @@ const newCycleFormValidationSchema = zod.object({
 type NewCycleFormDate = zod.infer<typeof newCycleFormValidationSchema>
 
 export function Home(){
-    const { register, handleSubmit, watch  } = useForm<NewCycleFormDate>({
+    const { register, handleSubmit, watch, reset  } = useForm<NewCycleFormDate>({
         resolver: zodResolver(newCycleFormValidationSchema),
         defaultValues: {
             task: "",
@@ -36,7 +37,8 @@ export function Home(){
     });
 
     function handleCreateNewCycle(data: NewCycleFormDate){
-
+        //a função abaixo retorna os campos para o defaultValues definidos no resolver
+        reset();
     }
 
     const task = watch("task");
