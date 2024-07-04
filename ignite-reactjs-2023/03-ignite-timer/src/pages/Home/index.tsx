@@ -16,14 +16,26 @@ const newCycleFormValidationSchema = zod.object({
         .number()
         .min(5, "O ciclo precisa ser de no mínimo 5 minutos")
         .max(60, "O ciclo precisa ser de no máximo 60 minutos"),
-})
+});
+
+// interface NewCycleFormDate{
+//     task: string;
+//     minutesAmount: number;
+// }
+
+//Aqui eu estou inferindo o tipo de NewCycleFormDate usando o schema do zod lá em cima
+type NewCycleFormDate = zod.infer<typeof newCycleFormValidationSchema>
 
 export function Home(){
-    const { register, handleSubmit, watch, formState  } = useForm({
+    const { register, handleSubmit, watch  } = useForm<NewCycleFormDate>({
         resolver: zodResolver(newCycleFormValidationSchema),
+        defaultValues: {
+            task: "",
+            minutesAmount: 0,
+        }
     });
 
-    function handleCreateNewCycle(data: any){
+    function handleCreateNewCycle(data: NewCycleFormDate){
 
     }
 
