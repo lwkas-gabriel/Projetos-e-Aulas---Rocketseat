@@ -9,6 +9,7 @@ import { FormContainer,
          MinutesAmountInput } from "./styles";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
+import { useState } from "react";
 
 const newCycleFormValidationSchema = zod.object({
     task: zod.string().min(1, "Informe a tarefa"),
@@ -25,9 +26,18 @@ const newCycleFormValidationSchema = zod.object({
 // }
 
 //Aqui eu estou inferindo o tipo de NewCycleFormDate usando o schema do zod lá em cima
-type NewCycleFormDate = zod.infer<typeof newCycleFormValidationSchema>
+type NewCycleFormDate = zod.infer<typeof newCycleFormValidationSchema>;
+
+interface Cycle {
+    id: string;
+    task: string;
+    minutesAmount: number;
+}
 
 export function Home(){
+    const [cycles, setCycles] = useState<Cycle[]>([]);
+    const [activeCycleId, setActiveCycleId] = useState<string | null>(null);
+
     const { register, handleSubmit, watch, reset  } = useForm<NewCycleFormDate>({
         resolver: zodResolver(newCycleFormValidationSchema),
         defaultValues: {
@@ -37,9 +47,23 @@ export function Home(){
     });
 
     function handleCreateNewCycle(data: NewCycleFormDate){
+        const id = String(new Date().getTime());
+
+        const newCycle: Cycle = {
+            id,
+            task: data.task,
+            minutesAmount: data.minutesAmount
+        };
+        //sempre que um mudançá de estado dependeer do valor anterior, usar a notacão abaixo
+        setCycles((state) => [...state, newCycle]);
+
+        setActiveCycleId(id);
+
         //a função abaixo retorna os campos para o defaultValues definidos no resolver
         reset();
     }
+
+    const activeCycle = cycles.find(cycle => cycle.id === activeCycleId);
 
     const task = watch("task");
     const isSubmitDisabled = !task;
