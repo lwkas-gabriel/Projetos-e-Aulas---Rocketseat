@@ -9,7 +9,8 @@ import { FormContainer,
          MinutesAmountInput } from "./styles";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { differenceInSeconds } from "date-fns";
 
 const newCycleFormValidationSchema = zod.object({
     task: zod.string().min(1, "Informe a tarefa"),
@@ -32,6 +33,7 @@ interface Cycle {
     id: string;
     task: string;
     minutesAmount: number;
+    startDate: Date;
 }
 
 export function Home(){
@@ -47,13 +49,26 @@ export function Home(){
         }
     });
 
+    const activeCycle = cycles.find(cycle => cycle.id === activeCycleId);
+
+    useEffect(() => {
+        if(activeCycle){
+            setInterval(() => {
+                setAmountSecoundsPassed(
+                    differenceInSeconds(new Date(), activeCycle.startDate),
+                )
+            }, 1000);
+        }
+    }, [activeCycle]);
+
     function handleCreateNewCycle(data: NewCycleFormDate){
         const id = String(new Date().getTime());
 
         const newCycle: Cycle = {
             id,
             task: data.task,
-            minutesAmount: data.minutesAmount
+            minutesAmount: data.minutesAmount,
+            startDate: new Date(),
         };
         //sempre que um mudançá de estado dependeer do valor anterior, usar a notacão abaixo
         setCycles((state) => [...state, newCycle]);
@@ -63,8 +78,6 @@ export function Home(){
         //a função abaixo retorna os campos para o defaultValues definidos no resolver
         reset();
     }
-
-    const activeCycle = cycles.find(cycle => cycle.id === activeCycleId);
 
     const totalSeconds = activeCycle ? activeCycle.minutesAmount * 60 : 0;
     const currentSeconds = activeCycle ? totalSeconds - amountSecoundsPassed : 0;
