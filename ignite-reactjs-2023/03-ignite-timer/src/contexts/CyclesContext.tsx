@@ -67,9 +67,6 @@ export function CyclesContextProvider({ children }: CyclesContextProviderProps){
 
         setActiveCycleId(id);
         setAmountSecondsPassed(0);
-
-        //a função abaixo retorna os campos para o defaultValues definidos no resolver
-        //reset();
     }
 
     function interruptCurrentCycle(){
