@@ -1,6 +1,12 @@
+import { useContext } from "react";
+import { formatDistanceToNow } from "date-fns";
+import ptBR from "date-fns/locale/pt";
 import { HistoryContainer, HistoryList, Status } from "./styles";
+import { CyclesContext } from "../../contexts/CyclesContext";
 
 export function History(){
+    const { cycles } = useContext(CyclesContext);
+
     return (
         <HistoryContainer>
             <h1>Meu Histórico</h1>
@@ -15,36 +21,31 @@ export function History(){
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Tarefa</td>
-                            <td>20 minutos</td>
-                            <td>Há 2 meses</td>
-                            <Status statusColor="green">Concluído</Status>
-                        </tr>
-                        <tr>
-                            <td>Tarefa 2</td>
-                            <td>40 minutos</td>
-                            <td>Há 1 mês</td>
-                            <Status statusColor="green">Concluído</Status>
-                        </tr>
-                        <tr>
-                            <td>Tarefa 3</td>
-                            <td>15 minutos</td>
-                            <td>Há 2 meses</td>
-                            <Status statusColor="green">Concluído</Status>
-                        </tr>
-                        <tr>
-                            <td>Tarefa 4</td>
-                            <td>10 minutos</td>
-                            <td>Há 4 meses</td>
-                            <Status statusColor="green">Concluído</Status>
-                        </tr>
-                        <tr>
-                            <td>Tarefa 5</td>
-                            <td>5 minutos</td>
-                            <td>Há 5 minutos</td>
-                            <Status statusColor="green">Concluído</Status>
-                        </tr>
+                        {cycles.map(cycle => {
+                            return (
+                                <tr key={cycle.id}>
+                                    <td>{cycle.task}</td>
+                                    <td>{cycle.minutesAmount} minutos</td>
+                                    <td>{formatDistanceToNow(cycle.startDate, {
+                                        addSuffix: true,
+                                        locale: ptBR,
+                                    })}</td>
+                                    <td>
+                                        { cycle.finishedDate && (
+                                            <Status statusColor="green">Concluído</Status>
+                                        )}
+
+                                        { cycle.interruptedDate && (
+                                            <Status statusColor="red">Interrompido</Status>
+                                        )}
+
+                                        { !cycle.interruptedDate && !cycle.interruptedDate && (
+                                            <Status statusColor="yellow">Em andamento</Status>
+                                        )}
+                                    </td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
             </HistoryList>
