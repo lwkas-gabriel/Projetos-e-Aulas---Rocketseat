@@ -12,19 +12,10 @@ export function Countdown(){
         let interval : number;
         if(activeCycle){
             interval = setInterval(() => {
-                const secondsDifference = differenceInSeconds(new Date(), activeCycle.startDate);
+                const secondsDifference = differenceInSeconds(new Date(), new Date(activeCycle.startDate));
 
                 if(secondsDifference >= totalSeconds){
                     markCurrentCycleAsFinished();
-                    // setCycles((state) =>
-                    //     state.map((cycle) => {
-                    //         if(cycle.id === activeCycleId){
-                    //             return {...cycle, finishedDate: new Date() };
-                    //         } else {
-                    //             return cycle;
-                    //         }
-                    //     }),
-                    // )
                     setSecondsPassed(totalSeconds);
                     clearInterval(interval);
                 }else{
