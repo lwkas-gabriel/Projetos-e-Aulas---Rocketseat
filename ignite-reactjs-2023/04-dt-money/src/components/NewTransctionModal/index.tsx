@@ -35,7 +35,7 @@ export function NewTransactionModal(){
                 
                 <form onSubmit={handleSubmit(handleCreateNewTransaction)}>
                     <input type="text" placeholder='Descrição' required {...register('description')}/>
-                    <input type="number" placeholder='Preço' required {...register('price'), {valueAsNumber: true}}/>
+                    <input type="number" placeholder='Preço' required {...register('price', {valueAsNumber: true})}/>
                     <input type="text" placeholder='Categoria' required {...register('category')}/>
 
                     <TransactionType>
