@@ -9,6 +9,6 @@ const Button = styled('button', {
 
 export function App(){
     return (
-        <Button></Button>
+        <Button>Hello World</Button>
     )
 }
