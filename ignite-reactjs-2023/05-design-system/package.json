@@ -4,6 +4,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@storybook/addon-docs": "^9.1.3",
     "@vitejs/plugin-react": "^5.0.1",
     "vite": "^7.1.3"
   }
